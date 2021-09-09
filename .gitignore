@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*pyc
 
 # C extensions
 *.so
@@ -136,5 +137,4 @@ compute_visibility_ho3d.py
 pred_for_gt_checking.py
 tmp
 *.json
-mano
 

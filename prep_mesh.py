@@ -8,6 +8,7 @@ from utils.vis_utils import *
 import random
 import os
 import open3d
+from tqdm import tqdm
 
 def install(package):
     if hasattr(pip, 'main'):
@@ -125,7 +126,7 @@ if __name__ == '__main__':
     YCBModelsDir = args['ycbModels_path']
 
     for seq in os.listdir(baseDir):
-        for filename in os.listdir(os.path.join(baseDir, seq, 'meta')):
+        for filename in tqdm(os.listdir(os.path.join(baseDir, seq, 'meta'))):
             print("filepath:", os.path.join(baseDir, seq, 'meta',  filename))
             anno = load_pickle_data(os.path.join(baseDir, seq, 'meta',  filename))
 
@@ -149,4 +150,4 @@ if __name__ == '__main__':
             open3d.io.write_triangle_mesh(os.path.join(baseDir, seq, 'mesh_obj',
                 os.path.splitext(filename)[0]+'.obj'), o3d_obj_mesh[0])
 
-    print("Mesh generation completed, save in folder:", os.path.join(baseDir, seq, 'meta', 'mesh'))
+        print("Mesh generation for sequence {} completed".format(seq))
