@@ -111,37 +111,6 @@ def mesh2open3dMesh2npy(mList, colorList, mesh_category = None):
     return o3dFacesList, o3dMeshList
 
 
-def normalize_center_joint_mesh(o3d_mesh_hand, o3d_mesh_obj):
-    # hand mesh vertices mean
-    o3d_mesh_hand_mean_v = np.asarray(np.mean(o3d_mesh_hand.vertices, axis=0)).reshape((1, -1))
-    
-    # hand mesh vertices mean
-    o3d_mesh_obj_mean_v = np.asarray(np.mean(o3d_mesh_obj.vertices, axis=0)).reshape((1, -1))
-    # raw_input("enter for hand and obj  v mean")
-    print("o3d_mesh_hand_mean_v", o3d_mesh_hand_mean_v)
-    print("o3d_mesh_obj_mean_v", o3d_mesh_obj_mean_v)
-    
-    centered_hand_mesh = open3d.geometry.TriangleMesh()
-    centered_object_mesh = open3d.geometry.TriangleMesh()
-    
-    # Non-weighted average
-    vertices_mean = (o3d_mesh_hand_mean_v + o3d_mesh_obj_mean_v) / 2.0
-    # raw_input("enter for non-weighted vertices_mean")
-    print("Non weighted_vertices_mean", vertices_mean)
-
-    centered_hand_mesh.vertices = open3d.utility.Vector3dVector(np.copy(np.subtract(np.asarray(o3d_mesh_hand.vertices), vertices_mean)))  
-    centered_hand_mesh.triangles = open3d.utility.Vector3iVector(np.copy(np.asarray(o3d_mesh_hand.triangles)))
-    numVert = np.asarray(o3d_mesh_hand.vertices).shape[0]
-    centered_hand_mesh.vertex_colors = open3d.utility.Vector3dVector(np.tile(np.array([[0.5, 0.5, 0.5]]), [numVert, 1]))
-
-    centered_object_mesh.vertices = open3d.utility.Vector3dVector(np.copy(np.subtract(np.asarray(o3d_mesh_obj.vertices), vertices_mean)))  
-    centered_object_mesh.triangles = open3d.utility.Vector3iVector(np.copy(np.asarray(o3d_mesh_obj.triangles)))
-    numVert = np.asarray(o3d_mesh_obj.vertices).shape[0]
-    centered_object_mesh.vertex_colors = open3d.utility.Vector3dVector(np.tile(np.array([[0.5, 0.5, 0.5]]), [numVert, 1]))
-
-    return centered_hand_mesh, centered_object_mesh
-
-
 if __name__ == '__main__':
     # parse the input arguments
     ap = argparse.ArgumentParser()
